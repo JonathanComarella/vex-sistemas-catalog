@@ -1,0 +1,27 @@
+.main-footer {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #000000;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFF;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+  }
+  
+  .footer-icons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footer-icons > * {
+    margin-right: 5px;
+  }
+
+  .footer-text {
+    color: #FFF;
+  }
