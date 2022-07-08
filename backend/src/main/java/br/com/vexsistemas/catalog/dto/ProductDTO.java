@@ -3,6 +3,10 @@ package br.com.vexsistemas.catalog.dto;
 import br.com.vexsistemas.catalog.entities.Category;
 import br.com.vexsistemas.catalog.entities.Product;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,10 +16,13 @@ import java.util.Set;
 public class ProductDTO implements Serializable {
 
     private Long id;
+    @NotBlank(message = "Campo Requerido")
     private String name;
     private String description;
+    @Positive(message = "O Valor deve ser positivo")
     private Double price;
     private String imgUrl;
+    @PastOrPresent(message = "A data do produto não pode ser futura")
     private Instant date;
 
     private List<CategoryDTO> categories = new ArrayList<>();
