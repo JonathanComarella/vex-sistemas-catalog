@@ -3,6 +3,7 @@ package br.com.vexsistemas.catalog.resources;
 import br.com.vexsistemas.catalog.dto.CategoryDTO;
 import br.com.vexsistemas.catalog.dto.UserDTO;
 import br.com.vexsistemas.catalog.dto.UserInsertDTO;
+import br.com.vexsistemas.catalog.dto.UserUpdateDTO;
 import br.com.vexsistemas.catalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,9 +42,9 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto) {
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+        UserDTO newDto = service.update(id, dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")

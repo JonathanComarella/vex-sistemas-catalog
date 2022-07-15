@@ -3,6 +3,7 @@ package br.com.vexsistemas.catalog.services;
 import br.com.vexsistemas.catalog.dto.RoleDTO;
 import br.com.vexsistemas.catalog.dto.UserDTO;
 import br.com.vexsistemas.catalog.dto.UserInsertDTO;
+import br.com.vexsistemas.catalog.dto.UserUpdateDTO;
 import br.com.vexsistemas.catalog.entities.Role;
 import br.com.vexsistemas.catalog.entities.User;
 import br.com.vexsistemas.catalog.repositories.RoleRepository;
@@ -14,6 +15,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +26,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -53,7 +57,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
@@ -85,5 +89,14 @@ public class UserService {
             Role role = roleRepository.getReferenceById(roleDto.getId());
             entity.getRoles().add(role);
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Email not found");
+        }
+        return user;
     }
 }
