@@ -1,22 +1,20 @@
-import { Router, Switch, Route, Redirect } from 'react-router-dom'
+import { Router , Switch, Route, Redirect, BrowserRouter} from 'react-router-dom'
+import Auth from 'pages/Auth';
 import Navbar from './core/components/Navbar';
-import Footer from './core/components/Footer';
 import Admin from './pages/Admin';
 import Catalog from './pages/Catalog';
 import ProductDetails from './pages/Catalog/components/ProductDetails';
-import Home from './pages/Home';
-import Auth from './pages/Auth';
-import history from './core/utils/history';
+import Footer from 'core/components/Footer';
 
 
 const Routes = () =>(
-  <Router history={history}>
+  <BrowserRouter>
     <Navbar/>
     <Switch>
       
       <Route path="/" exact>
       <Redirect from="/" to="/products" exact/>
-        {/* <Home/> */}
+        <Catalog/>
       </Route>
       
       <Route path="/products" exact>
@@ -39,7 +37,7 @@ const Routes = () =>(
 
     </Switch>
     <Footer/>
-  </Router>
+    </BrowserRouter>
 );
 
 export default Routes;

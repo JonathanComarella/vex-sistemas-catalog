@@ -2,6 +2,7 @@ package br.com.vexsistemas.catalog.services;
 
 import br.com.vexsistemas.catalog.dto.CategoryDTO;
 import br.com.vexsistemas.catalog.dto.ProductDTO;
+import br.com.vexsistemas.catalog.dto.UriDTO;
 import br.com.vexsistemas.catalog.entities.Category;
 import br.com.vexsistemas.catalog.entities.Product;
 import br.com.vexsistemas.catalog.repositories.CategoryRepository;
@@ -12,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.net.URL;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,10 @@ public class ProductService {
     private ProductRepository repository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private S3Service s3Service;
+
+
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(Pageable pageable) {
         Page<Product> productsList = repository.findAll(pageable);
@@ -82,5 +88,10 @@ public class ProductService {
             Category category = categoryRepository.getReferenceById(catDto.getId());
             entity.getCategories().add(category);
         }
+    }
+
+    public UriDTO uploadFile(MultipartFile file) {
+        URL url = s3Service.uploadFile(file);
+        return new UriDTO(url.toString());
     }
 }

@@ -1,8 +1,8 @@
 import jwtDecode from 'jwt-decode';
 import history from './history';
 
-export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'dscatalog';
-export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'dscatalog123';
+export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'vexcatalog';
+export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'vexcatalog123';
 
 type LoginResponse = {
   access_token: string;
@@ -68,5 +68,6 @@ export const isAllowedByRole = (routesRoles: Role[] = []) => {
 
 export const logout = () =>{
   localStorage.removeItem('authData');
-  history.replace('/auth/login');
+  history.replace('/products');
+  window.location.reload();
 }

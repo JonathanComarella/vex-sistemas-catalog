@@ -36,16 +36,8 @@ const Navbar = () => {
 
       <div className={drawerActive ? "menu-mobile-container" : "menu-container"}>
         <ul className="main-menu">
-          {/* <li>
-            <NavLink 
-              className="nav-link" 
-              onClick={() => setDrawerActive(false)} 
-              to="/products" 
-              exact
-            >
-              HOME
-            </NavLink>
-          </li> */}
+          {
+            currentUser && ( 
           <li>
             <NavLink 
               className="nav-link" 
@@ -55,17 +47,20 @@ const Navbar = () => {
               CATÁLOGO
             </NavLink>
           </li>
-
-          <li>
-            <NavLink 
-              className="nav-link" 
-              onClick={() => {setDrawerActive(false)}}
-              to="/admin"
-            >
-              PAINEL DO ADMIN
-            </NavLink>
-          </li>
-
+            )}
+          {
+            currentUser && (
+              <li>
+                <NavLink 
+                  className="nav-link" 
+                  onClick={() => {setDrawerActive(false)}}
+                  to="/admin"
+                  >
+                  PAINEL DO ADMIN
+                </NavLink>
+              </li>
+            )}
+          
           {
             drawerActive && (
               <li>
